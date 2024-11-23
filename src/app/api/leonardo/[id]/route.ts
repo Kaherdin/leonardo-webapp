@@ -19,9 +19,17 @@ export async function GET(
     }
 
     const data = await response.json()
-    return NextResponse.json(data)
+    return NextResponse.json({
+      status: data.status,
+      generations: data.generations_by_pk?.generated_images || [],
+    })
   } catch (error) {
     console.error('Get result error:', error)
-    return NextResponse.json({ error: 'Failed to get result' }, { status: 500 })
+    return NextResponse.json(
+      {
+        error: error instanceof Error ? error.message : 'Failed to get result',
+      },
+      { status: 500 },
+    )
   }
 }

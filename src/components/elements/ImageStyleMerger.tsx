@@ -77,39 +77,42 @@ const ImageStyleMerger = () => {
       ])
 
       // Lancement de la génération
-      const generationResult = await leonardoApi.generateImage(
+      const generationId = await leonardoApi.generateImage(
         contentImageId,
         styleImageId,
       )
 
-      // Attente et récupération du résultat (avec retry)
-      let result
+      // Polling pour le résultat
       let retries = 0
       while (retries < 30) {
         // 30 tentatives maximum
-        result = await leonardoApi.getGenerationResult(
-          generationResult.generationId,
-        )
-        if (result.status === 'complete') {
+        const result = await leonardoApi.getGenerationResult(generationId)
+
+        if (result.status === 'complete' && result.imageUrl) {
           setResultImage(result.imageUrl)
+          toast({
+            title: 'Succès !',
+            description: 'Image générée avec succès',
+          })
           break
+        } else if (result.status === 'failed') {
+          throw new Error('Generation failed')
         }
-        await new Promise((resolve) => setTimeout(resolve, 2000)) // Attente de 2 secondes entre chaque tentative
+
+        await new Promise((resolve) => setTimeout(resolve, 2000))
         retries++
       }
 
-      toast({
-        title: 'Succès !',
-        description: 'Image générée avec succès',
-        variant: 'default',
-      })
+      if (retries >= 30) {
+        throw new Error('Generation timed out')
+      }
     } catch (error) {
+      console.error('Generation error:', error)
       toast({
         title: 'Erreur',
         description: 'Une erreur est survenue lors de la génération',
         variant: 'destructive',
       })
-      console.error('Generation error:', error)
     } finally {
       setIsLoading(false)
     }

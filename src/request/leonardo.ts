@@ -1,30 +1,20 @@
 const LEONARDO_API_URL = '/api/leonardo'
 
 async function uploadImage(file: File) {
-  console.log('Uploading file:', file.name, file.type, file.size)
-
   const formData = new FormData()
   formData.append('file', file)
 
-  try {
-    const response = await fetch(`${LEONARDO_API_URL}/upload`, {
-      method: 'POST',
-      body: formData,
-    })
+  const response = await fetch(`${LEONARDO_API_URL}/upload`, {
+    method: 'POST',
+    body: formData,
+  })
 
-    if (!response.ok) {
-      const error = await response.json()
-      console.error('Upload response error:', error)
-      throw new Error(error.message || 'Failed to upload image')
-    }
-
-    const data = await response.json()
-    console.log('Upload success:', data)
-    return data.id
-  } catch (error) {
-    console.error('Upload error:', error)
-    throw error
+  if (!response.ok) {
+    throw new Error('Failed to upload image')
   }
+
+  const data = await response.json()
+  return data.id
 }
 
 async function generateImage(contentImageId: string, styleImageId: string) {
@@ -37,7 +27,7 @@ async function generateImage(contentImageId: string, styleImageId: string) {
       height: 512,
       width: 512,
       modelId: 'aa77f04e-3eec-4034-9c07-d0f619684628',
-      prompt: 'Transform this image based on the style',
+      prompt: 'Transform this image with the given style',
       presetStyle: 'CINEMATIC',
       photoReal: true,
       photoRealVersion: 'v2',
@@ -62,23 +52,36 @@ async function generateImage(contentImageId: string, styleImageId: string) {
   })
 
   if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error.message || 'Failed to generate image')
-  }
-
-  return await response.json()
-}
-
-async function getGenerationResult(generationId: string) {
-  const response = await fetch(`${LEONARDO_API_URL}/result/${generationId}`)
-
-  if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error.message || 'Failed to get generation result')
+    throw new Error('Failed to generate image')
   }
 
   const data = await response.json()
-  return data
+  if (!data.sdGenerationJob?.generationId) {
+    throw new Error('No generation ID received')
+  }
+
+  return data.sdGenerationJob.generationId
+}
+
+async function getGenerationResult(generationId: string) {
+  if (!generationId) {
+    throw new Error('Generation ID is required')
+  }
+
+  const response = await fetch(`${LEONARDO_API_URL}/result/${generationId}`)
+
+  if (!response.ok) {
+    if (response.status === 404) {
+      return { status: 'pending' }
+    }
+    throw new Error('Failed to get generation result')
+  }
+
+  const data = await response.json()
+  return {
+    status: data.status,
+    imageUrl: data.generations?.[0]?.url,
+  }
 }
 
 export const leonardoApi = {

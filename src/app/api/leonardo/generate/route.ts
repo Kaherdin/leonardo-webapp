@@ -17,13 +17,17 @@ export async function POST(req: Request) {
     )
 
     if (!response.ok) {
-      throw new Error('Generation failed')
+      const error = await response.json()
+      throw new Error(`Generation failed: ${JSON.stringify(error)}`)
     }
 
     const data = await response.json()
     return NextResponse.json(data)
   } catch (error) {
     console.error('Generation error:', error)
-    return NextResponse.json({ error: 'Generation failed' }, { status: 500 })
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : 'Generation failed' },
+      { status: 500 },
+    )
   }
 }
