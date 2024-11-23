@@ -1,0 +1,79 @@
+{
+  "Project": {
+    "title": "Nos projets",
+    "expertise": "Notre expertise",
+    "content": "Description",
+    "view_more": "Voir plus",
+    "client": "Client",
+    "year": "Année",
+    "service": "Services",
+    "website": "Site web"
+  },
+  "Service": {
+    "view_more": "Voir plus",
+    "content": "Description"
+  },
+  "HomePage": {
+    "title": "Bonjour Monde",
+    "about": "A propos"
+  },
+  "General": {
+    "read_more": "Lire plus",
+    "read_less": "Lire moins"
+  },
+  "Pricing": {
+    "btn_pricing": "Commencez",
+    "most_popular": "Le plus populaire"
+  },
+  "Contact": {
+    "title": "Dites-nous en plus sur vos projets",
+    "button_contact": "Contactez-nous",
+    "offices": "Nos bureaux",
+    "email_us": "Ecrivez-nous",
+    "budget": "Votre budget",
+    "subject": "Sujet",
+    "fullname": "Nom complet",
+    "name": "Votre nom",
+    "email": "Votre email",
+    "media": "Pièce(s) jointe(s)",
+    "message": "Votre message",
+    "phone": "Votre téléphone",
+    "company": "Votre entreprise",
+    "follow_us": "Suivez-nous",
+    "budget_label01": "Moins de 5'000CHF",
+    "budget_label02": "10 000CHF - 20 000CHF",
+    "budget_label03": "20 000CHF - 50 000CHF",
+    "budget_label04": "50 000CHF - 100 000CHF",
+    "form_submit_title": "Votre message a été envoyé avec succès",
+    "form_submit_description": "Nous vous remercions pour votre message. Nous vous contacterons dans les plus brefs délais."
+  },
+  "Navigation": {
+    "home": "Accueil",
+    "project": "Projets",
+    "services": "Services",
+    "about": "A propos",
+    "blog": "Blog",
+    "contact": "Contactez-nous",
+    "follow_us": "Suivez-nous"
+  },
+  "Team": {
+    "title": "L'équipe",
+    "view_more": "Voir plus",
+    "content": "Description"
+  },
+  "Reference": {
+    "title": "Références",
+    "view_more": "Voir plus",
+    "content": "Description"
+  },
+  "Culture": {
+    "title": "Culture",
+    "view_more": "Voir plus",
+    "content": "Description"
+  },
+  "Pagination": {
+    "previous": "Précédent",
+    "next": "Suivant",
+    "morePages": "Plus de pages"
+  }
+}

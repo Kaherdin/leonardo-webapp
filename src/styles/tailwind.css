@@ -1,0 +1,14 @@
+@import './base.css';
+@import './components.css';
+@import './utilities.css';
+
+
+.main_content img {
+    border-radius: 20px;
+    transition: 0.5s;
+    filter: grayscale(0.8);
+}
+
+.main_content img:hover {
+    filter: grayscale(1);
+}

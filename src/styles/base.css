@@ -1,0 +1,215 @@
+@tailwind base;
+
+.markdown-content {
+  @apply prose prose-slate max-w-none;
+
+  /* Headings */
+  h1 {
+    @apply mb-4 mt-6 text-4xl font-bold;
+  }
+  h2 {
+    @apply mb-3 mt-5 text-3xl font-bold;
+  }
+  h3 {
+    @apply mb-2 mt-4 text-2xl font-bold;
+  }
+  h4 {
+    @apply mb-2 mt-3 text-xl font-bold;
+  }
+  h5 {
+    @apply mb-1 mt-2 text-lg font-bold;
+  }
+  h6 {
+    @apply mb-1 mt-2 text-base font-bold;
+  }
+
+  /* Lists */
+  ul {
+    list-style-type: disc !important;
+    margin: 0.75rem 0 !important;
+    padding-left: 1.5rem !important;
+
+    li {
+      list-style-type: disc !important;
+      padding-left: 0 !important;
+      &::before {
+        display: none; /* Remove custom bullets */
+      }
+    }
+
+    /* Handle nested lists with ql-indent classes */
+    .ql-indent-1 {
+      list-style-type: circle !important;
+      margin-left: 1.5rem !important;
+    }
+
+    .ql-indent-2 {
+      list-style-type: square !important;
+      margin-left: 3rem !important;
+    }
+  }
+
+  /* Ordered Lists */
+  ol {
+    list-style-type: decimal;
+    margin: 0.75rem 0;
+    padding-left: 1.5rem;
+    counter-reset: list-1;
+
+    > li {
+      list-style: none;
+      counter-increment: list-1;
+      position: relative;
+
+      &::before {
+        content: counter(list-1) '.';
+        position: absolute;
+        left: -1.5rem;
+      }
+    }
+
+    /* Second level */
+    li.ql-indent-1 {
+      counter-increment: list-2;
+      margin-left: 2.5em;
+      list-style: none;
+
+      &::before {
+        content: counter(list-2, lower-alpha) '.';
+        position: absolute;
+        left: -1.5rem;
+      }
+    }
+
+    /* Third level */
+    li.ql-indent-2 {
+      counter-increment: list-3;
+      margin-left: 4em;
+      list-style: none;
+
+      &::before {
+        content: counter(list-3, lower-roman) '.';
+        position: absolute;
+        left: -1.5rem;
+      }
+    }
+  }
+
+  ol li {
+    display: block;
+  }
+
+  ol li::marker {
+    content: none;
+  }
+
+  /* Adjust indentation for Quill's indent classes */
+  .ql-indent-1 {
+    margin-left: 2em !important;
+    padding-left: 0 !important;
+  }
+
+  .ql-indent-2 {
+    margin-left: 4em !important;
+    padding-left: 0 !important;
+  }
+
+  /* Paragraphs and spacing */
+  p {
+    @apply my-3;
+  }
+
+  /* Links */
+  a {
+    @apply text-primary-600 underline hover:text-primary-700;
+  }
+
+  /* Images */
+  img {
+    @apply my-4 h-auto max-w-full rounded-lg;
+  }
+
+  /* Text alignment */
+  .ql-align-center {
+    @apply text-center;
+  }
+  .ql-align-right {
+    @apply text-right;
+  }
+  .ql-align-justify {
+    @apply text-justify;
+  }
+
+  /* Video embeds */
+  .ql-video {
+    @apply my-4 aspect-video w-full;
+    max-width: 100%;
+  }
+
+  /* Video alignment */
+  .ql-video.ql-align-center {
+    @apply mx-auto block;
+  }
+  .ql-video.ql-align-right {
+    @apply ml-auto block;
+  }
+
+  /* Text formatting - Fixed bold and italic */
+  strong,
+  b,
+  .ql-bold {
+    @apply font-bold !important;
+  }
+
+  em,
+  i,
+  .ql-italic {
+    @apply italic !important;
+  }
+
+  u,
+  .ql-underline {
+    @apply underline !important;
+  }
+
+  /* Combined formatting */
+  .ql-bold.ql-italic {
+    @apply font-bold italic !important;
+  }
+
+  /* Quill specific text formatting */
+  [class*='ql-size'] {
+    @apply leading-normal;
+  }
+
+  .ql-size-small {
+    @apply text-sm;
+  }
+
+  .ql-size-large {
+    @apply text-lg;
+  }
+
+  .ql-size-huge {
+    @apply text-xl;
+  }
+
+  /* Block quotes */
+  blockquote {
+    @apply my-4 border-l-4 border-gray-200 pl-4 italic;
+  }
+
+  /* Code blocks */
+  pre {
+    @apply my-4 overflow-x-auto rounded-lg bg-gray-100 p-4;
+  }
+  code {
+    @apply rounded bg-gray-100 px-1 py-0.5;
+  }
+}
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "Project": {
+    "title": "Our Projects",
+    "expertise": "Our Expertise",
+    "content": "Description",
+    "view_more": "View More",
+    "client": "Client",
+    "year": "Year",
+    "service": "Services",
+    "website": "Website"
+  },
+  "Service": {
+    "view_more": "View More",
+    "content": "Description"
+  },
+  "HomePage": {
+    "title": "Hello World",
+    "about": "About"
+  },
+  "General": {
+    "read_more": "Read More",
+    "read_less": "Read Less"
+  },
+  "Pricing": {
+    "btn_pricing": "Get Started",
+    "most_popular": "Most Popular"
+  },
+  "Contact": {
+    "title": "Tell us more about your projects",
+    "button_contact": "Contact Us",
+    "offices": "Our Offices",
+    "email_us": "Email Us",
+    "budget": "Your Budget",
+    "subject": "Subject",
+    "fullname": "Full Name",
+    "name": "Your Name",
+    "email": "Your Email",
+    "media": "Attachment(s)",
+    "message": "Your Message",
+    "phone": "Your Phone",
+    "company": "Your Company",
+    "follow_us": "Follow Us",
+    "budget_label01": "Less than 5,000 CHF",
+    "budget_label02": "10,000 CHF - 20,000 CHF",
+    "budget_label03": "20,000 CHF - 50,000 CHF",
+    "budget_label04": "50,000 CHF - 100,000 CHF",
+    "form_submit_title": "Your message has been successfully sent",
+    "form_submit_description": "Thank you for your message. We will contact you as soon as possible."
+  },
+  "Navigation": {
+    "home": "Home",
+    "project": "Projects",
+    "services": "Services",
+    "about": "About",
+    "blog": "Blog",
+    "contact": "Contact Us",
+    "follow_us": "Follow Us"
+  },
+  "Team": {
+    "title": "Meet Our Team",
+    "view_more": "View More",
+    "content": "Description"
+  },
+  "Reference": {
+    "title": "References",
+    "view_more": "View More",
+    "content": "Description"
+  },
+  "Culture": {
+    "title": "Culture",
+    "view_more": "View More",
+    "content": "Description"
+  },
+  "Pagination": {
+    "previous": "Previous",
+    "next": "Next",
+    "morePages": "More Pages"
+  }
+}
