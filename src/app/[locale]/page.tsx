@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 
 import { Container } from '@/components/ui/Container'
-import PhotoTransformer from '@/components/elements/LeonardoApp'
-import ImageStyleMerger from '@/components/elements/ImageStyleMerger'
+import PhotoTransformer from '@/components/leonardo/LeonardoApp'
+import ImageStyleMerger from '@/components/leonardo/ImageStyleMerger'
 
 export const metadata: Metadata = {
   title: 'AI Photo Transformer',

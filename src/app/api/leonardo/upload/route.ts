@@ -11,7 +11,7 @@ export async function POST(req: Request) {
       {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${process.env.LEONARDO_API_KEY}`,
+          Authorization: `Bearer ${process.env.NEXT_PUBLIC_LEONARDO_API_KEY}`,
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },

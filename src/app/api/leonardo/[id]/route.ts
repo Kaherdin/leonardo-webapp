@@ -13,7 +13,7 @@ export async function GET(
         method: 'GET',
         headers: {
           accept: 'application/json',
-          authorization: `Bearer ${process.env.LEONARDO_API_KEY}`, // Assurez-vous que c'est bien la bonne clé API
+          authorization: `Bearer ${process.env.NEXT_PUBLIC_LEONARDO_API_KEY}`, // Assurez-vous que c'est bien la bonne clé API
           'Content-Type': 'application/json',
         },
       },
