@@ -36,56 +36,58 @@ async function generateImage(contentImageId: string, styleImageId: string) {
         {
           initImageId: contentImageId,
           initImageType: 'UPLOADED',
-          preprocessorId: 67,
-          strengthType: 'High',
-          influence: 0.5,
+          preprocessorId: 67, // Style Reference
+          strengthType: 'Low',
+          influence: 0.3, // Faible influence pour le style
         },
         {
           initImageId: styleImageId,
           initImageType: 'UPLOADED',
-          preprocessorId: 67,
+          preprocessorId: 133, // Content Reference
           strengthType: 'High',
-          influence: 0.5,
+          influence: 0.9, // Forte influence pour le contenu
         },
       ],
     }),
   })
-
-  if (!response.ok) {
-    throw new Error('Failed to generate image')
-  }
-
-  const data = await response.json()
-  if (!data.sdGenerationJob?.generationId) {
-    throw new Error('No generation ID received')
-  }
-
-  return data.sdGenerationJob.generationId
 }
 
-async function getGenerationResult(generationId: string) {
-  if (!generationId) {
-    throw new Error('Generation ID is required')
-  }
+async function waitForResult(
+  generationId: string,
+  maxAttempts = 60,
+): Promise<string> {
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
+    console.log(`Polling attempt ${attempt + 1} of ${maxAttempts}`)
 
-  const response = await fetch(`${LEONARDO_API_URL}/result/${generationId}`)
+    try {
+      const response = await fetch(`${LEONARDO_API_URL}/result/${generationId}`)
+      const data = await response.json()
+      console.log('Poll response:', data)
 
-  if (!response.ok) {
-    if (response.status === 404) {
-      return { status: 'pending' }
+      if (data.status === 'complete' && data.imageUrl) {
+        console.log('Generation complete:', data.imageUrl)
+        return data.imageUrl
+      }
+
+      // Si on reçoit une erreur ou un statut FAILED, on arrête
+      if (data.generationStatus === 'FAILED') {
+        throw new Error('Generation failed')
+      }
+
+      // Attendre plus longtemps entre les tentatives
+      await new Promise((resolve) => setTimeout(resolve, 3000))
+    } catch (error) {
+      console.error('Polling error:', error)
+      // Attendre avant de réessayer
+      await new Promise((resolve) => setTimeout(resolve, 3000))
     }
-    throw new Error('Failed to get generation result')
   }
 
-  const data = await response.json()
-  return {
-    status: data.status,
-    imageUrl: data.generations?.[0]?.url,
-  }
+  throw new Error('Generation timed out')
 }
 
 export const leonardoApi = {
   uploadImage,
   generateImage,
-  getGenerationResult,
+  waitForResult,
 }
