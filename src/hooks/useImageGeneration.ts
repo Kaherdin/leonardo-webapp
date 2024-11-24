@@ -21,6 +21,10 @@ export function useImageGeneration() {
         leonardoApi.uploadImage(contentImage),
         leonardoApi.uploadImage(styleImage),
       ])
+
+      // Attendre un peu que les images soient traitées
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+
       setProgress(30)
 
       // Génération
@@ -62,10 +66,11 @@ export function useImageGeneration() {
       toast({
         title: 'Erreur',
         description:
-          error instanceof Error ? error.message : 'Une erreur est survenue',
+          error instanceof Error
+            ? error.message
+            : "Une erreur est survenue lors de l'upload",
         variant: 'destructive',
       })
-      return []
     } finally {
       setIsLoading(false)
       setProgress(0)
