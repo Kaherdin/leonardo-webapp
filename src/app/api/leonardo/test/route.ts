@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 
 export async function GET() {
-  const apiKey = process.env.NEXT_PUBLIC_LEONARDO_API_KEY
+  const apiKey = process.env.LEONARDO_API_KEY
 
   // Log la clé masquée pour le débogage
   console.log('API Key (last 4 chars):', apiKey?.slice(-4))

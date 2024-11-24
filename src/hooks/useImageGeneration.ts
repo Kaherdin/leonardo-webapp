@@ -1,3 +1,4 @@
+// /src/hooks/useImageGeneration.ts
 import { useState, useRef } from 'react'
 import { useToast } from '@/hooks/use-toast'
 import { leonardoApi } from '@/request/leonardo'
@@ -7,7 +8,6 @@ export function useImageGeneration() {
   const [progress, setProgress] = useState(0)
   const [loadingStatus, setLoadingStatus] = useState('')
   const [resultImages, setResultImages] = useState<string[]>([])
-  const progressIntervalRef = useRef<NodeJS.Timeout | null>(null)
   const { toast } = useToast()
 
   const generateImages = async (contentImage: File, styleImage: File) => {
@@ -15,19 +15,16 @@ export function useImageGeneration() {
     setProgress(0)
 
     try {
-      // Upload
+      // Upload images
       setLoadingStatus('Upload des images...')
       const [contentImageId, styleImageId] = await Promise.all([
         leonardoApi.uploadImage(contentImage),
         leonardoApi.uploadImage(styleImage),
       ])
 
-      // Attendre un peu que les images soient traitées
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-
       setProgress(30)
 
-      // Génération
+      // Start generation
       setLoadingStatus('Démarrage de la génération...')
       const generationId = await leonardoApi.generateImage({
         contentImageId,
@@ -35,12 +32,14 @@ export function useImageGeneration() {
       })
       setProgress(50)
 
-      // Polling
+      // Check status
       setLoadingStatus('Génération en cours... (1-3 minutes)')
       let attempts = 0
-      while (attempts < 60) {
+      const maxAttempts = 60
+
+      while (attempts < maxAttempts) {
         const { status, images } =
-          await leonardoApi.getGenerationStatus(generationId)
+          await leonardoApi.checkGenerationStatus(generationId)
 
         if (status === 'COMPLETE' && images.length > 0) {
           setResultImages(images)
@@ -56,7 +55,7 @@ export function useImageGeneration() {
         }
 
         attempts++
-        setProgress(Math.min(50 + attempts, 95))
+        setProgress(Math.min(50 + (attempts * 45) / maxAttempts, 95))
         await new Promise((resolve) => setTimeout(resolve, 3000))
       }
 
@@ -66,9 +65,7 @@ export function useImageGeneration() {
       toast({
         title: 'Erreur',
         description:
-          error instanceof Error
-            ? error.message
-            : "Une erreur est survenue lors de l'upload",
+          error instanceof Error ? error.message : 'Une erreur est survenue',
         variant: 'destructive',
       })
     } finally {

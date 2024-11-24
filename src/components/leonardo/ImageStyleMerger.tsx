@@ -1,3 +1,4 @@
+//components/leonardo/ImageStyleMerger.tsx
 'use client'
 
 import React, { useState } from 'react'
@@ -6,8 +7,6 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { ResultDisplay } from './ResultDisplay'
 import { useImageGeneration } from '@/hooks/useImageGeneration'
-
-const LEONARDO_API_URL = '/api/leonardo'
 
 const ImageStyleMerger = () => {
   const [contentImage, setContentImage] = useState<File | null>(null)

@@ -1,3 +1,5 @@
+//components/leonardo/ResultDisplay.tsx
+
 'use client'
 
 import { useState } from 'react'
